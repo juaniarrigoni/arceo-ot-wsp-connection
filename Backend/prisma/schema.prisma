@@ -1,0 +1,47 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model OT {
+  id        String       @id @default(cuid())
+  fecha     DateTime
+  recursos  String[]
+  estado    String       @default("activa")
+  createdAt DateTime     @default(now())
+  personal  OTPersonal[]
+  tareas    Tarea[]
+}
+
+model Personal {
+  id       String       @id @default(cuid())
+  nombre   String
+  telefono String       @unique
+  ots      OTPersonal[]
+}
+
+model OTPersonal {
+  otId       String
+  personalId String
+  ot         OT       @relation(fields: [otId], references: [id])
+  personal   Personal @relation(fields: [personalId], references: [id])
+
+  @@id([otId, personalId])
+}
+
+model Tarea {
+  id            String   @id @default(cuid())
+  otId          String
+  descripcion   String
+  observacion   String
+  visibilidad   String
+  destinatarios String[]
+  enviada       Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  ot            OT       @relation(fields: [otId], references: [id])
+}

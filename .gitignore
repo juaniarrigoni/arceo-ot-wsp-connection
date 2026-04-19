@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+Backend/node_modules/
+Frontend/node_modules/
+
+# Build outputs
+dist/
+Backend/dist/
+Frontend/dist/
+
+# Environment variables (NUNCA subir al repo)
+.env
+Backend/.env
+Frontend/.env
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Prisma generated (se regenera en build)
+Backend/prisma/generated/
